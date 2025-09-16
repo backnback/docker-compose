@@ -1,0 +1,78 @@
+### Gradle ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Java ###
+*.class
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+### Spring Boot ###
+application-*.yml
+!application.yml
+!application-example.yml
+.env
+
+### Database ###
+*.db
+*.sqlite
+*.sqlite3
+
+### Redis ###
+*.rdb
+dump.rdb
+appendonly.aof
+
+### Logs ###
+logs/
+*.log
+log/
+
+### OS generated files ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+### Test Coverage ###
+coverage/
+.coverage
+coverage.xml
+*.cover
+
+### Generated Files ###
+bin/
+gen/
+dist/
+tmp/
+temp/
+
+### Node (프론트엔드 통합 프로젝트의 경우) ###
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
