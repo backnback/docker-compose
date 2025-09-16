@@ -28,7 +28,7 @@ services:
     container_name: common-mariadb
     hostname: common-mariadb
     ports:
-      - "3307:3306"
+      - "3305:3306"
     environment:
       TZ: Asia/Seoul
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-1234}
@@ -76,11 +76,11 @@ services:
       - "6379:6379"
     environment:
       TZ: Asia/Seoul
-    command: redis-server --requirepass ${REDIS_PASSWORD:-1234} --maxmemory 256mb --maxmemory-policy allkeys-lru
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-1234}", "ping"]
+      test: ["CMD", "redis-cli", "ping"]
       interval: 30s
       timeout: 10s
       retries: 3
