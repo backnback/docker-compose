@@ -1,32 +1,8 @@
 services:
-  # MySQL 8.0
-  mysql:
-    image: mysql:8.0
-    container_name: common-mysql
-    hostname: common-mysql
-    ports:
-      - "3306:3306"
-    environment:
-      TZ: Asia/Seoul
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-testdb}
-      MYSQL_USER: ${MYSQL_USER:-user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-1234}
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root123}"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    restart: unless-stopped
-
-  # MariaDB 10.11
   mariadb:
     image: mariadb:10.11
-    container_name: common-mariadb
-    hostname: common-mariadb
+    container_name: mariadb
+    hostname: mariadb
     ports:
       - "3305:3306"
     environment:
@@ -39,28 +15,6 @@ services:
       - mariadb_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MARIADB_ROOT_PASSWORD:-root123}"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    restart: unless-stopped
-
-  # PostgreSQL 15
-  postgresql:
-    image: postgres:15
-    container_name: common-postgresql
-    hostname: common-postgresql
-    ports:
-      - "5432:5432"
-    environment:
-      TZ: Asia/Seoul
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
-      POSTGRES_DB: ${POSTGRES_DB:-testdb}
-    volumes:
-      - postgresql_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-testdb}"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -87,35 +41,10 @@ services:
       start_period: 20s
     restart: unless-stopped
 
-  # MongoDB 7
-  mongodb:
-    image: mongo:7
-    container_name: common-mongodb
-    hostname: common-mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      TZ: Asia/Seoul
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-root}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-1234}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-testdb}
-    volumes:
-      - mongodb_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    restart: unless-stopped
-
 volumes:
-  mysql_data:
   mariadb_data:
-  postgresql_data:
   redis_data:
-  mongodb_data:
 
 networks:
   default:
-    name: shared-network
+    name: e2d-network
