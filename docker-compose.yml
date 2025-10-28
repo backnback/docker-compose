@@ -24,8 +24,8 @@ services:
   # Redis 7
   redis:
     image: redis:7-alpine
-    container_name: common-redis
-    hostname: common-redis
+    container_name: redis
+    hostname: redis
     ports:
       - "6379:6379"
     environment:
