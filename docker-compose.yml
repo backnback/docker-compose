@@ -87,28 +87,28 @@ services:
       start_period: 20s
     restart: unless-stopped
 
-  # MongoDB 7
+  # Mongo DB
   mongodb:
-    image: mongo:7
+    image: mongo:7.0
     container_name: mongodb
     hostname: mongodb
     ports:
       - "27017:27017"
     environment:
       TZ: Asia/Seoul
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-root}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-1234}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-cl2d}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-1234}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE:-chat_messages}
     volumes:
       - mongodb_data:/data/db
+    command: mongod --quiet
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     restart: unless-stopped
-
 
   # Redpanda
   redpanda:
@@ -143,7 +143,6 @@ services:
       retries: 5
       start_period: 60s
     restart: unless-stopped
-
 
   redpanda-console:
     image: docker.redpanda.com/redpandadata/console:v2.4.3
