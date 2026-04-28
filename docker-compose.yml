@@ -152,7 +152,7 @@ services:
       redpanda:
         condition: service_healthy
     ports:
-      - "8090:8080"
+      - "8099:8080"
     environment:
       TZ: Asia/Seoul
       KAFKA_BROKERS: redpanda:9092
