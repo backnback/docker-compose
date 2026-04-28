@@ -112,7 +112,7 @@ services:
 
   # Redpanda
   redpanda:
-    image: docker.redpanda.com/redpandadata/redpanda:v23.3.3
+    image: docker.redpanda.com/redpandadata/redpanda:v26.1.5
     container_name: redpanda
     hostname: redpanda
     command:
@@ -145,7 +145,7 @@ services:
     restart: unless-stopped
 
   redpanda-console:
-    image: docker.redpanda.com/redpandadata/console:v2.4.3
+    image: docker.redpanda.com/redpandadata/console:v3.7.1
     container_name: redpanda-console
     hostname: redpanda-console
     depends_on:
