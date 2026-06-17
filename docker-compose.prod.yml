@@ -22,6 +22,28 @@ services:
       start_period: 40s
     restart: unless-stopped
 
+  # PostgreSQL 15
+  postgresql:
+    image: postgres:15
+    container_name: postgresql
+    hostname: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_DB: ${POSTGRES_DB:-testdb}
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-testdb}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
   # Redis 7
   redis:
     image: redis:7-alpine
@@ -72,8 +94,8 @@ services:
     hostname: redpanda
     command:
       - redpanda start
-      - --kafka-addr internal://0.0.0.0:9092
-      - --advertise-kafka-addr internal://redpanda:9092
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda:9092,external://kafka.cl2d.internal:19092
       - --rpc-addr redpanda:33145
       - --advertise-rpc-addr redpanda:33145
       - --smp 1
@@ -82,6 +104,7 @@ services:
       - --overprovisioned
       - --default-log-level=info
     ports:
+      - "19092:19092"  # Kafka API (external, EC2 간 silo→main)
       - "19644:9644"   # Admin API
     environment:
       TZ: Asia/Seoul
@@ -112,6 +135,7 @@ services:
 
 volumes:
   mariadb_data:
+  postgresql_data:
   redis_data:
   mongodb_data:
   redpanda_data:

@@ -33,6 +33,7 @@ application-*.yml
 !application.yml
 !application-example.yml
 .env
+.env.prod
 
 ### Database ###
 *.db
