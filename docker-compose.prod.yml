@@ -72,8 +72,8 @@ services:
     hostname: redpanda
     command:
       - redpanda start
-      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
-      - --advertise-kafka-addr internal://redpanda:9092,external://api.cl2d.io:19092
+      - --kafka-addr internal://0.0.0.0:9092
+      - --advertise-kafka-addr internal://redpanda:9092
       - --rpc-addr redpanda:33145
       - --advertise-rpc-addr redpanda:33145
       - --smp 1
@@ -82,7 +82,6 @@ services:
       - --overprovisioned
       - --default-log-level=info
     ports:
-      - "19092:19092"  # Kafka API
       - "19644:9644"   # Admin API
     environment:
       TZ: Asia/Seoul
