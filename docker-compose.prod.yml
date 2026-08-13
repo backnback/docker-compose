@@ -108,6 +108,10 @@ services:
     image: docker.redpanda.com/redpandadata/redpanda:v26.1.5
     container_name: redpanda
     hostname: redpanda
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     command:
       - redpanda start
       - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
@@ -115,7 +119,7 @@ services:
       - --rpc-addr redpanda:33145
       - --advertise-rpc-addr redpanda:33145
       - --smp 1
-      - --memory 1G
+      - --memory 2G
       - --reserve-memory 0M
       - --overprovisioned
       - --default-log-level=info
