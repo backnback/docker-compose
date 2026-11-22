@@ -44,9 +44,9 @@ services:
       start_period: 40s
     restart: unless-stopped
 
-  # Redis 7
+  # Redis 7.4
   redis:
-    image: redis:7-alpine
+    image: redis:7.4-alpine
     container_name: redis
     hostname: redis
     environment:
@@ -64,7 +64,7 @@ services:
 
   # Redis Persistent (RefreshToken SSOT / Kafka 멱등가드 - 영속, 포트 미노출)
   redis-persistent:
-    image: redis:7-alpine
+    image: redis:8.6.2-alpine
     container_name: redis-persistent
     hostname: redis-persistent
     environment:
